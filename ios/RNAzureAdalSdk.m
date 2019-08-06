@@ -1,5 +1,7 @@
 
 #import "RNAzureAdalSdk.h"
+#import "React/RCTLog.h"
+
 #import <ADAL/ADAL.h>
 
 @implementation RNAzureAdalSdk
@@ -28,8 +30,8 @@ RCT_REMAP_METHOD(acquireToken,
     @try{
         NSURL *urlRedirectUri = [NSURL URLWithString:redirectUri];
         ADAuthenticationError *error = nil;
-        authContext = [ADAuthenticationContext authenticationContextWithAuthority:authority
-                                                                            error:&error];
+        ADAuthenticationContext *authContext = [ADAuthenticationContext authenticationContextWithAuthority:authority
+                                                                                                     error:&error];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [authContext acquireTokenWithResource:graphURI
@@ -39,10 +41,10 @@ RCT_REMAP_METHOD(acquireToken,
              {
                  if (AD_SUCCEEDED != result.status){
                      // display error on the screen
-                      reject( [[NSString alloc] initWithFormat:@"%d", result.error.code], result.error.errorDetails, result.error );
+                     reject( [[NSString alloc] initWithFormat:@"%ld", (long)result.error.code], result.error.errorDetails, result.error );
                  }
                  else{
-                     resolver(result.accessToken);
+                     resolve(result.accessToken);
                  }
              }];
             

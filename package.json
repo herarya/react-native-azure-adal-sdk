@@ -2,7 +2,7 @@
 {
   "name": "react-native-azure-adal-sdk",
   "version": "1.0.0",
-  "description": "",
+  "description": "Microsoft Active Directory Authentication Library (ADAL) SSO Login",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
